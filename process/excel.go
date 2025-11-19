@@ -37,7 +37,7 @@ func Excel(file string) (out []string, err error) {
 	out = make([]string, 0)
 	f, err := excelize.OpenFile(file)
 	if err != nil {
-		return out, fmt.Errorf("%w", err)
+		return out, fmt.Errorf("open Excel file %q: %w", file, err)
 	}
 	defer func() {
 		// Close the spreadsheet; only override if nothing has failed yet.
@@ -45,9 +45,14 @@ func Excel(file string) (out []string, err error) {
 			err = fmt.Errorf("close spreadsheet: %w", cerr)
 		}
 	}()
-	rows, err := f.GetRows("Sheet1")
+	var rows [][]string
+	sheets := f.GetSheetList()
+	if len(sheets) == 0 {
+		return out, fmt.Errorf("no sheets found in file")
+	}
+	rows, err = f.GetRows(sheets[0])
 	if err != nil {
-		return out, fmt.Errorf("%w", err)
+		return out, fmt.Errorf("read rows from sheet %q: %w", sheets[0], err)
 	}
 	for _, row := range rows {
 		if len(row) > 0 {
