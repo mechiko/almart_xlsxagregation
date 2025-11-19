@@ -60,12 +60,6 @@ func New(logger *zap.SugaredLogger, listDbs dbscan.ListDbInfoForScan, dbPath str
 	if exit {
 		return nil, fmt.Errorf("%s не все бд найдены", modError)
 	}
-	if di := rp.dbs.Info(dbscan.Other); di != nil {
-		// инициализация для Self если она есть в настройках списка доступных БД
-		if err := rp.prepareSelf(); err != nil {
-			return nil, fmt.Errorf("%s ошибка миграции self %w", modError, err)
-		}
-	}
 	return rp, nil
 }
 

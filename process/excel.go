@@ -13,8 +13,10 @@ func ExcelSheets(file string) (out []string, err error) {
 		return out, fmt.Errorf("%w", err)
 	}
 	defer func() {
-		// Close the spreadsheet.
-		err = f.Close()
+		// Close the spreadsheet; only override if nothing has failed yet.
+		if cerr := f.Close(); cerr != nil && err == nil {
+			err = fmt.Errorf("close spreadsheet: %w", cerr)
+		}
 	}()
 	list := f.GetSheetList()
 	for _, sheet := range list {
@@ -38,8 +40,10 @@ func Excel(file string) (out []string, err error) {
 		return out, fmt.Errorf("%w", err)
 	}
 	defer func() {
-		// Close the spreadsheet.
-		err = f.Close()
+		// Close the spreadsheet; only override if nothing has failed yet.
+		if cerr := f.Close(); cerr != nil && err == nil {
+			err = fmt.Errorf("close spreadsheet: %w", cerr)
+		}
 	}()
 	rows, err := f.GetRows("Sheet1")
 	if err != nil {

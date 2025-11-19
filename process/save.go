@@ -6,6 +6,7 @@ import (
 	"io"
 	"os"
 	"path/filepath"
+	"sort"
 	"strings"
 )
 
@@ -33,10 +34,11 @@ func (p *process) Save(out string) error {
 	for k := range p.Palet {
 		keys = append(keys, k)
 	}
+	sort.Strings(keys)
 	filePaletList := "palet" + ".csv"
 	filePaletList = filepath.Join(out, filePaletList)
 	if err := saveKoroba(filePaletList, keys); err != nil {
-		return fmt.Errorf("error write file koroba %w", err)
+		return fmt.Errorf("error write file palet %w", err)
 	}
 	return nil
 }
