@@ -1,0 +1,63 @@
+package process
+
+import (
+	"fmt"
+
+	"github.com/xuri/excelize/v2"
+)
+
+func ExcelSheets(file string) (out []string, err error) {
+	out = make([]string, 0)
+	f, err := excelize.OpenFile(file)
+	if err != nil {
+		return out, fmt.Errorf("%w", err)
+	}
+	defer func() {
+		// Close the spreadsheet; only override if nothing has failed yet.
+		if cerr := f.Close(); cerr != nil && err == nil {
+			err = fmt.Errorf("close spreadsheet: %w", cerr)
+		}
+	}()
+	list := f.GetSheetList()
+	for _, sheet := range list {
+		rows, err := f.GetRows(sheet)
+		if err != nil {
+			return out, fmt.Errorf("%w", err)
+		}
+		for _, row := range rows {
+			if len(row) > 0 {
+				out = append(out, fmt.Sprintf("%s:%s", sheet, row[0]))
+			}
+		}
+	}
+	return out, nil
+}
+
+func Excel(file string) (out []string, err error) {
+	out = make([]string, 0)
+	f, err := excelize.OpenFile(file)
+	if err != nil {
+		return out, fmt.Errorf("open Excel file %q: %w", file, err)
+	}
+	defer func() {
+		// Close the spreadsheet; only override if nothing has failed yet.
+		if cerr := f.Close(); cerr != nil && err == nil {
+			err = fmt.Errorf("close spreadsheet: %w", cerr)
+		}
+	}()
+	var rows [][]string
+	sheets := f.GetSheetList()
+	if len(sheets) == 0 {
+		return out, fmt.Errorf("no sheets found in file")
+	}
+	rows, err = f.GetRows(sheets[0])
+	if err != nil {
+		return out, fmt.Errorf("read rows from sheet %q: %w", sheets[0], err)
+	}
+	for _, row := range rows {
+		if len(row) > 0 {
+			out = append(out, row[0])
+		}
+	}
+	return out, nil
+}
