@@ -62,19 +62,23 @@ func main() {
 		errMessageExit("ошибка чтения файла", err.Error())
 	}
 
-	outDir := "OUT"
+	outDir := "."
+	outDir, err = utility.DialogSelectDir(outDir)
+	if err != nil {
+		errMessageExit("ошибка выбора пути назначения", err.Error())
+	}
 
 	err = proc.ScanPalet()
 	if err != nil {
 		// errMessageExit("ошибка ScanRecords", err.Error())
-		loger.Errorf("ошибка ScanRecords %v", err)
+		loger.Errorf("ошибка ScanPalet %v", err)
 	}
 
 	// записываем короба и палеты раньше пусть будут
 	err = proc.Save(outDir)
 	if err != nil {
 		// errMessageExit("ошибка ScanRecords", err.Error())
-		loger.Errorf("ошибка ScanRecords %v", err)
+		loger.Errorf("ошибка Save %v", err)
 	}
 
 	// запись отчетов нанесения в БД

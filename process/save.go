@@ -10,6 +10,7 @@ import (
 )
 
 func (p *process) Save(out string) error {
+	// или создает или ничего не делает
 	if err := os.MkdirAll(out, 0o755); err != nil {
 		return fmt.Errorf("create out dir %q: %w", out, err)
 	}

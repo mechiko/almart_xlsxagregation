@@ -19,7 +19,7 @@ type Record struct {
 }
 
 func NewRecord(row []string) (*Record, error) {
-	if len(row) < 8 {
+	if len(row) < 9 {
 		return nil, fmt.Errorf("записей %d должно быть больше или равно 8", len(row))
 	}
 	// fakeCode := strings.Replace(row[3], "_x001D_", "\x1D", 1)

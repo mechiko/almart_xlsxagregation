@@ -133,6 +133,7 @@ output/
 .dist/
 .data/
 .vscode/
+out/
 
 # Go-specific binary blobs
 *.syso
@@ -149,8 +150,5 @@ coverage*.out
 in/**/*.xlsx
 in/**/*.xls
 in/**/*.csv
-out/**/*.xlsx
-out/**/*.xls
-out/**/*.csv
 cmd/*.csv
 
