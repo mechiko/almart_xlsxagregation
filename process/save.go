@@ -15,17 +15,17 @@ func (p *process) Save(out string) error {
 	if err := os.MkdirAll(out, 0o755); err != nil {
 		return fmt.Errorf("create out dir %q: %w", out, err)
 	}
-	fileNameKoroba := "koroba_" + p.NameFileWithoutExt + ".csv"
+	fileNameKoroba := p.NameFileWithoutExt + "_коробки_агрегация" + ".csv"
 	fileNameKoroba = filepath.Join(out, fileNameKoroba)
 	if err := saveTxt(fileNameKoroba, p.ListKoroba); err != nil {
 		return fmt.Errorf("error write file koroba %w", err)
 	}
-	fileNamePalet := "palet_" + p.NameFileWithoutExt + ".csv"
+	fileNamePalet := p.NameFileWithoutExt + "_палеты_агрегация" + ".csv"
 	fileNamePalet = filepath.Join(out, fileNamePalet)
 	if err := saveTxt(fileNamePalet, p.ListPalet); err != nil {
 		return fmt.Errorf("error write file palet %w", err)
 	}
-	fileKorobaList := "koroba" + ".csv"
+	fileKorobaList := p.NameFileWithoutExt + "_коробки_список" + ".csv"
 	fileKorobaList = filepath.Join(out, fileKorobaList)
 	if err := saveKoroba(fileKorobaList, p.KorobaKeys); err != nil {
 		return fmt.Errorf("error write file koroba %w", err)
@@ -35,7 +35,7 @@ func (p *process) Save(out string) error {
 		keys = append(keys, k)
 	}
 	sort.Strings(keys)
-	filePaletList := "palet" + ".csv"
+	filePaletList := p.NameFileWithoutExt + "_палеты_список" + ".csv"
 	filePaletList = filepath.Join(out, filePaletList)
 	if err := saveKoroba(filePaletList, keys); err != nil {
 		return fmt.Errorf("error write file palet %w", err)

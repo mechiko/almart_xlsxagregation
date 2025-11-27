@@ -13,7 +13,7 @@ func (p *process) SuccessHtml(outDir string) (string, error) {
 	if err != nil {
 		return "", fmt.Errorf("ошибка template %w", err)
 	}
-	fileHtml := "report_" + p.NameFileWithoutExt
+	fileHtml := p.NameFileWithoutExt + "_отчет"
 	fileHtml = filepath.Join(outDir, fileHtml) + ".html"
 	file, err := os.Create(fileHtml)
 	if err != nil {

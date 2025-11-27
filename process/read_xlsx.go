@@ -48,7 +48,7 @@ func (k *process) ReadXlsx(file string) (err error) {
 				k.Gtin = rec.Cis.Gtin
 			}
 			if k.Gtin != rec.Cis.Gtin {
-				return fmt.Errorf("error gtin row %s not equal gtin first %s row %d", rec.Cis.Gtin, k.Gtin, rowNumber+1)
+				return fmt.Errorf("ошибка gtin в строке %s не равен gtin в первой строке %s строка таблицы %d", rec.Cis.Gtin, k.Gtin, rowNumber+1)
 			}
 			k.Records = append(k.Records, rec)
 		}

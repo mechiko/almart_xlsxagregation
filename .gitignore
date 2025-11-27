@@ -134,6 +134,7 @@ output/
 .data/
 .vscode/
 out/
+in/
 
 # Go-specific binary blobs
 *.syso
@@ -146,9 +147,3 @@ out/
 # Go coverage profiles
 coverage*.out
 *.coverprofile
-
-in/**/*.xlsx
-in/**/*.xls
-in/**/*.csv
-cmd/*.csv
-
